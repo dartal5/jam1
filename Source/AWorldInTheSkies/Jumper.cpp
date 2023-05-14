@@ -20,7 +20,7 @@ void AJumper::Tick(const float InDeltaTime)
 
 	if (IsValid(BreathingComponent) && IsValid(OxygenComponent))
 	{
-		BreathingComponent->Breath(InDeltaTime, *OxygenComponent);
+		BreathingComponent->Breath(InDeltaTime, OxygenComponent);
 	}
 }
 

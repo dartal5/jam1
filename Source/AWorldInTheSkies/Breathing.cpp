@@ -2,13 +2,15 @@
 
 #include "Oxygen.h"
 
-void UBreathingComponent::Breath(const float InDeltaTime, UOxygenComponent& InOxygenComponent)
+void UBreathingComponent::Breath(const float InDeltaTime, UOxygenComponent* InOxygenComponent)
 {
+	const bool IsOxygenComponentValid = IsValid(InOxygenComponent);
+	
 	ElapsedTime += InDeltaTime;
-
-	if (BreathingIntervalMode == EBreathingIntervalMode::Continuous)
+	
+	if (BreathingIntervalMode == EBreathingIntervalMode::Continuous && IsOxygenComponentValid)
 	{
-		InOxygenComponent.ChangeBy(ComputeConsumesValue(InOxygenComponent) / InDeltaTime);
+		InOxygenComponent->ChangeBy(ComputeConsumesValue(InOxygenComponent) / InDeltaTime);
 		return;
 	}
 
@@ -19,27 +21,49 @@ void UBreathingComponent::Breath(const float InDeltaTime, UOxygenComponent& InOx
 
 	ElapsedTime = Interval > 0.f ? ElapsedTime - Interval : 0.f;
 
-	if (BreathingIntervalMode == EBreathingIntervalMode::Discrete)
+	if (BreathingIntervalMode == EBreathingIntervalMode::Discrete && IsOxygenComponentValid)
 	{
-		InOxygenComponent.ChangeBy(ComputeConsumesValue(InOxygenComponent));
+		InOxygenComponent->ChangeBy(ComputeConsumesValue(InOxygenComponent));
 	}
 }
 
-float UBreathingComponent::ComputeConsumesValue(const UOxygenComponent& InOxygenComponent) const
+void UBreathingComponent::ResetTime()
 {
-	if (BreathingConsumeMode == EBreathingConsumeMode::InAbsolute)
+	ElapsedTime = 0.f;
+}
+
+float UBreathingComponent::GetTime() const
+{
+	return ElapsedTime;
+}
+
+void UBreathingComponent::SetInterval(const float InInterval)
+{
+	Interval = InInterval;
+}
+
+float UBreathingComponent::GetInterval() const
+{
+	return Interval;
+}
+
+float UBreathingComponent::ComputeConsumesValue(const UOxygenComponent* InOxygenComponent) const
+{
+	const bool IsOxygenComponentValid = IsValid(InOxygenComponent);
+
+	if (BreathingConsumeMode == EBreathingConsumeMode::Absolute)
 	{
 		return -Consumes;
 	}
 
-	if (BreathingConsumeMode == EBreathingConsumeMode::InPercentFromCapacity)
+	if (BreathingConsumeMode == EBreathingConsumeMode::PercentFromCapacity && IsOxygenComponentValid)
 	{
-		return -Consumes * (100.f / InOxygenComponent.GetCapacity());
+		return -Consumes * (100.f / InOxygenComponent->GetCapacity());
 	}
 
-	if (BreathingConsumeMode == EBreathingConsumeMode::InPercentFromRemains)
+	if (BreathingConsumeMode == EBreathingConsumeMode::PercentFromRemains && IsOxygenComponentValid)
 	{
-		return -Consumes * (100.f / InOxygenComponent.GetRemains());
+		return -Consumes * (100.f / InOxygenComponent->GetRemains());
 	}
 
 	return 0.f;

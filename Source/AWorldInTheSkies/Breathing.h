@@ -7,9 +7,9 @@ class UOxygenComponent;
 UENUM()
 enum class EBreathingConsumeMode
 {
-	InAbsolute,
-	InPercentFromRemains,
-	InPercentFromCapacity
+	Absolute,
+	PercentFromRemains,
+	PercentFromCapacity
 };
 
 UENUM()
@@ -24,21 +24,36 @@ class AWORLDINTHESKIES_API UBreathingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 public:
-	void Breath(const float InDeltaTime, UOxygenComponent& InOxygenComponent);
+	UFUNCTION(BlueprintCallable)
+	void Breath(const float InDeltaTime, UOxygenComponent* InOxygenComponent);
+	
+	UFUNCTION(BlueprintCallable)
+	void ResetTime();
 
-	UPROPERTY(EditAnywhere)
-	float Interval = 1.f;
+	UFUNCTION(BlueprintCallable)
+	float GetTime() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetInterval(const float InInterval);
+	
+	UFUNCTION(BlueprintCallable)
+	float GetInterval() const;
 
 	UPROPERTY(EditAnywhere)
 	float Consumes = 10.f;
 
 	UPROPERTY(EditAnywhere)
-	EBreathingConsumeMode BreathingConsumeMode = EBreathingConsumeMode::InAbsolute;
+	EBreathingConsumeMode BreathingConsumeMode = EBreathingConsumeMode::Absolute;
 
 	UPROPERTY(EditAnywhere)
 	EBreathingIntervalMode BreathingIntervalMode = EBreathingIntervalMode::Discrete;
 
-	float ComputeConsumesValue(const UOxygenComponent& InOxygenComponent) const;
+	UFUNCTION(BlueprintCallable)
+	float ComputeConsumesValue(const UOxygenComponent* InOxygenComponent) const;
+
+protected:
+	UPROPERTY(EditAnywhere)
+	float Interval = 1.f;
 
 private:
 	float ElapsedTime = 0.f;
