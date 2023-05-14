@@ -1,11 +1,11 @@
 #pragma once
 
-#include "GameFramework/Character.h"
+#include "PaperCharacter.h"
 
 #include "Jumper.generated.h"
 
 UCLASS()
-class AWORLDINTHESKIES_API AJumper : public ACharacter
+class AWORLDINTHESKIES_API AJumper : public APaperCharacter
 {
 	GENERATED_BODY()
 public:

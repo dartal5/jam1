@@ -4,5 +4,5 @@
 
 AAWorldInTheSkiesGameMode::AAWorldInTheSkiesGameMode()
 {
-	DefaultPawnClass = AJumper::StaticClass();
+	//DefaultPawnClass = AJumper::StaticClass();
 }

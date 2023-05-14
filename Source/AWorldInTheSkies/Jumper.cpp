@@ -5,7 +5,7 @@
 
 AJumper::AJumper(const FObjectInitializer& InObjectInitializer)
 {
-	AutoPossessPlayer = EAutoReceiveInput::Player0;
+	//AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
 	AddOwnedComponent(OxygenComponent);
