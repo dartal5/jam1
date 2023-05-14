@@ -5,33 +5,35 @@
 #include "Oxygen.generated.h"
 
 UCLASS()
-class UOxygenComponent : public UActorComponent
+class AWORLDINTHESKIES_API UOxygenComponent : public UActorComponent
 {
 	GENERATED_BODY()
 public:
-	void Initialize(const int32 InCapacity, const int32 InRemain);
+	void Initialize(const float InCapacity, const float InRemains);
 
 	UFUNCTION(BlueprintCallable)
-	int32 GetRemains() const;
+	void Reset();
 
 	UFUNCTION(BlueprintCallable)
-	int32 GetCapacity() const;
+	void Set(const float InRemains);
 
 	UFUNCTION(BlueprintCallable)
-	void Increase(const int32 InValue);
+	float GetRemains() const;
 
 	UFUNCTION(BlueprintCallable)
-	void Decrease(const int32 InValue);
+	float GetCapacity() const;
 
-	DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRemainsChange, int32, int32);
+	UFUNCTION(BlueprintCallable)
+	void ChangeBy(const float InValue);
 
+	DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRemainsChange, float, float);
 	FOnRemainsChange OnRemainsChange;
 
 protected:
 	UPROPERTY(EditAnywhere)
-	int32 Remains = 100;
+	float Remains = 100;
 
 	UPROPERTY(EditAnywhere)
-	int32 Capacity = 100;
+	float Capacity = 100;
 
 };

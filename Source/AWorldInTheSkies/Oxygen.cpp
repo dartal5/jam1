@@ -1,31 +1,34 @@
 #include "Oxygen.h"
 
-void UOxygenComponent::Initialize(const int32 InCapacity, const int32 InRemains)
+void UOxygenComponent::Initialize(const float InCapacity, const float InRemains)
 {
-	Capacity = InCapacity;
-	Remains = InRemains;
+	Capacity = FMath::Max(InCapacity, 0.f);
+	Remains = FMath::Min(Capacity, FMath::Max(InRemains, 0.f));
 }
 
-int32 UOxygenComponent::GetRemains() const
+void UOxygenComponent::Reset()
+{
+	Remains = Capacity;
+}
+
+void UOxygenComponent::Set(const float InRemains)
+{
+	Remains = FMath::Min(Capacity, FMath::Max(InRemains, 0.f));
+}
+
+float UOxygenComponent::GetRemains() const
 {
 	return Remains;
 }
 
-int32 UOxygenComponent::GetCapacity() const
+float UOxygenComponent::GetCapacity() const
 {
 	return Capacity;
 }
 
-void UOxygenComponent::Increase(const int32 InValue)
+void UOxygenComponent::ChangeBy(const float InValue)
 {
-	const int32 OldValue = Remains;
-	Remains = FMath::Min(Remains + FMath::Max(InValue, 0), Capacity);
-	OnRemainsChange.Broadcast(OldValue, Remains);
-}
-
-void UOxygenComponent::Decrease(const int32 InValue)
-{
-	const int32 OldValue = Remains;
-	Remains = FMath::Max(Remains - FMath::Max(InValue, 0), 0);
+	const float OldValue = Remains;
+	Remains = FMath::Min(Capacity, FMath::Max(Remains + InValue, 0.f));
 	OnRemainsChange.Broadcast(OldValue, Remains);
 }
