@@ -4,5 +4,9 @@
 
 AAWorldInTheSkiesGameMode::AAWorldInTheSkiesGameMode()
 {
-	//DefaultPawnClass = AJumper::StaticClass();
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Blueprints/BP_Player"));
+	if (PlayerPawnBPClass.Class != NULL)
+	{
+		DefaultPawnClass = PlayerPawnBPClass.Class;
+	}
 }
