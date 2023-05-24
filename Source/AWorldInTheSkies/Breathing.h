@@ -5,7 +5,7 @@
 class UOxygenComponent;
 
 UENUM(BlueprintType)
-enum class EBreathingConsumeMode
+enum class EBreathingConsumeMode : uint8
 {
 	Absolute,
 	PercentFromRemains,
@@ -13,7 +13,7 @@ enum class EBreathingConsumeMode
 };
 
 UENUM(BlueprintType)
-enum class EBreathingIntervalMode
+enum class EBreathingIntervalMode : uint8
 {
 	Discrete,
 	Continuous

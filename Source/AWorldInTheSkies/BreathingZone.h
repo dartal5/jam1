@@ -35,11 +35,10 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type InEndPlayReason) override;
 
 	UFUNCTION()
-	void OnBeginOverlap(AActor* InOverlappedActor, AActor* InOtherActor);
+	virtual void OnBeginOverlap(AActor* InOverlappedActor, AActor* InOtherActor);
 
 	UFUNCTION()
-	void OnEndOverlap(AActor* InOverlappedActor, AActor* InOtherActor);
-
+	virtual void OnEndOverlap(AActor* InOverlappedActor, AActor* InOtherActor);
 
 	void HandleStartBreathingComponent(UBreathingComponent& InBreathingComponent) override;
 	void HandleEndBreathingComponent(UBreathingComponent& InBreathingComponent) override;
