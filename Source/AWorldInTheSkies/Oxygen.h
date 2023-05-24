@@ -4,7 +4,7 @@
 
 #include "Oxygen.generated.h"
 
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class AWORLDINTHESKIES_API UOxygenComponent : public UActorComponent
 {
 	GENERATED_BODY()

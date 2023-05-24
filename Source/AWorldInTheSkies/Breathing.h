@@ -4,7 +4,7 @@
 
 class UOxygenComponent;
 
-UENUM()
+UENUM(BlueprintType)
 enum class EBreathingConsumeMode
 {
 	Absolute,
@@ -12,14 +12,14 @@ enum class EBreathingConsumeMode
 	PercentFromCapacity
 };
 
-UENUM()
+UENUM(BlueprintType)
 enum class EBreathingIntervalMode
 {
 	Discrete,
 	Continuous
 };
 
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class AWORLDINTHESKIES_API UBreathingComponent : public UActorComponent
 {
 	GENERATED_BODY()
