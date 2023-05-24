@@ -40,7 +40,7 @@ protected:
 	UFUNCTION()
 	virtual void OnEndOverlap(AActor* InOverlappedActor, AActor* InOtherActor);
 
-	void HandleStartBreathingComponent(UBreathingComponent& InBreathingComponent) override;
-	void HandleEndBreathingComponent(UBreathingComponent& InBreathingComponent) override;
+	virtual void HandleStartBreathingComponent(UBreathingComponent& InBreathingComponent) override;
+	virtual void HandleEndBreathingComponent(UBreathingComponent& InBreathingComponent) override;
 
 };

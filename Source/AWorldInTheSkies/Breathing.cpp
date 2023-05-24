@@ -10,7 +10,7 @@ void UBreathingComponent::Breath(const float InDeltaTime, UOxygenComponent* InOx
 	
 	if (BreathingIntervalMode == EBreathingIntervalMode::Continuous && IsOxygenComponentValid)
 	{
-		InOxygenComponent->ChangeBy(ComputeConsumesValue(InOxygenComponent) / InDeltaTime);
+		InOxygenComponent->ChangeBy(ComputeConsumesValue(InOxygenComponent) * (InDeltaTime / Interval));
 		return;
 	}
 
@@ -58,12 +58,12 @@ float UBreathingComponent::ComputeConsumesValue(const UOxygenComponent* InOxygen
 
 	if (BreathingConsumeMode == EBreathingConsumeMode::PercentFromCapacity && IsOxygenComponentValid)
 	{
-		return -Consumes * (100.f / InOxygenComponent->GetCapacity());
+		return -Consumes * (InOxygenComponent->GetCapacity() / 100.f);
 	}
 
 	if (BreathingConsumeMode == EBreathingConsumeMode::PercentFromRemains && IsOxygenComponentValid)
 	{
-		return -Consumes * (100.f / InOxygenComponent->GetRemains());
+		return -Consumes * (InOxygenComponent->GetRemains() / 100.f);
 	}
 
 	return 0.f;
