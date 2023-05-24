@@ -31,9 +31,9 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere)
-	float Remains = 100;
+	float Remains = 100.f;
 
 	UPROPERTY(EditAnywhere)
-	float Capacity = 100;
+	float Capacity = 100.f;
 
 };
