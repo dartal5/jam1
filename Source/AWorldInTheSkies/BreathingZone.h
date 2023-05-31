@@ -42,5 +42,4 @@ protected:
 
 	virtual void HandleStartBreathingComponent(UBreathingComponent& InBreathingComponent) override;
 	virtual void HandleEndBreathingComponent(UBreathingComponent& InBreathingComponent) override;
-
 };

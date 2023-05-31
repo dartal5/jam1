@@ -33,8 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetTime() const;
 
-	UFUNCTION(BlueprintCallable)
-	void SetInterval(const float InInterval);
+		UFUNCTION(BlueprintCallable)
+		void SetInterval(const float InInterval);
 	
 	UFUNCTION(BlueprintCallable)
 	float GetInterval() const;
