@@ -20,6 +20,9 @@ class AWORLDINTHESKIES_API AJumper : public APaperCharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* EscapeAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = FlipBooks, meta = (AllowPrivateAccess = "true"))
 	class UPaperFlipbook* IdleFlipbook;
 
