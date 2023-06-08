@@ -1,6 +1,7 @@
 #include "Jumper.h"
 
 #include "Oxygen.h"
+#include "Health.h"
 #include "Breathing.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -12,6 +13,9 @@ AJumper::AJumper(const FObjectInitializer& InObjectInitializer)
 {
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
 	AddOwnedComponent(OxygenComponent);
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	AddOwnedComponent(HealthComponent);
 
 	BreathingComponent = CreateDefaultSubobject<UBreathingComponent>(TEXT("BreathingComponent"));
 	AddOwnedComponent(BreathingComponent);
@@ -39,6 +43,11 @@ void AJumper::BeginPlay()
 		OxygenComponent->OnRemainsChange.AddUObject(this, &AJumper::HandleOxygenRemainsChange);
 	}
 
+	if (IsValid(HealthComponent))
+	{
+		HealthComponent->OnRemainsChange.AddUObject(this, &AJumper::HandleHealthRemainsChange);
+	}
+
 	AddInputMappingContext();
 }
 
@@ -47,6 +56,11 @@ void AJumper::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	if (IsValid(OxygenComponent))
 	{
 		OxygenComponent->OnRemainsChange.RemoveAll(this);
+	}
+
+	if (IsValid(HealthComponent))
+	{
+		HealthComponent->OnRemainsChange.RemoveAll(this);
 	}
 
 	Super::EndPlay(EndPlayReason);
@@ -95,16 +109,31 @@ void AJumper::UpdateControlRotation()
 
 void AJumper::HandleOxygenRemainsChange(const float OldValue, const float NewValue)
 {
-	if (NewValue != 0)
+	if (!FMath::IsNearlyZero(NewValue))
 	{
 		return;
 	}
 
-	UE_LOG(LogTemp, Display, TEXT("Player Died in Pain... reseting"));
+	UE_LOG(LogTemp, Display, TEXT("[Oxygen 0] Player Died in Pain..."));
 
 	if (IsValid(OxygenComponent))
 	{
 		OxygenComponent->Reset();
+	}
+}
+
+void AJumper::HandleHealthRemainsChange(const float OldValue, const float NewValue)
+{
+	if (!FMath::IsNearlyZero(NewValue))
+	{
+		return;
+	}
+
+	UE_LOG(LogTemp, Display, TEXT("[Health 0] Player Died in Pain..."));
+
+	if (IsValid(HealthComponent))
+	{
+		HealthComponent->Reset();
 	}
 }
 
