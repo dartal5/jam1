@@ -50,9 +50,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 	class UHealthComponent* HealthComponent = nullptr;
 
+	UPROPERTY(EditAnywhere)
+	class URestartComponent* RestartComponent = nullptr;
+
 	void HandleOxygenRemainsChange(const float OldValue, const float NewValue);
 	void HandleHealthRemainsChange(const float OldValue, const float NewValue);
-
+	void Restart();
 
 private:
 	void AddInputMappingContext();

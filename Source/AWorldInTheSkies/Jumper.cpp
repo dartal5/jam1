@@ -2,7 +2,9 @@
 
 #include "Oxygen.h"
 #include "Health.h"
+#include "Restart.h"
 #include "Breathing.h"
+#include "Checkpoint.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputTriggers.h"
@@ -16,6 +18,9 @@ AJumper::AJumper(const FObjectInitializer& InObjectInitializer)
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	AddOwnedComponent(HealthComponent);
+
+	RestartComponent = CreateDefaultSubobject<URestartComponent>(TEXT("RestartComponent"));
+	AddOwnedComponent(RestartComponent);
 
 	BreathingComponent = CreateDefaultSubobject<UBreathingComponent>(TEXT("BreathingComponent"));
 	AddOwnedComponent(BreathingComponent);
@@ -116,10 +121,7 @@ void AJumper::HandleOxygenRemainsChange(const float OldValue, const float NewVal
 
 	UE_LOG(LogTemp, Display, TEXT("[Oxygen 0] Player Died in Pain..."));
 
-	if (IsValid(OxygenComponent))
-	{
-		OxygenComponent->Reset();
-	}
+	Restart();
 }
 
 void AJumper::HandleHealthRemainsChange(const float OldValue, const float NewValue)
@@ -131,10 +133,34 @@ void AJumper::HandleHealthRemainsChange(const float OldValue, const float NewVal
 
 	UE_LOG(LogTemp, Display, TEXT("[Health 0] Player Died in Pain..."));
 
+	Restart();
+}
+
+void AJumper::Restart()
+{
+	if (!IsValid(RestartComponent))
+	{
+		return;
+	}
+
+	if (!IsValid(RestartComponent->CheckpointComponent))
+	{
+		return;
+	}
+
+	const FVector RestartPosition = RestartComponent->CheckpointComponent->RestartPosition;
+
+	if (IsValid(OxygenComponent))
+	{
+		OxygenComponent->Reset();
+	}
+
 	if (IsValid(HealthComponent))
 	{
 		HealthComponent->Reset();
 	}
+
+	SetActorLocation(RestartPosition);
 }
 
 void AJumper::AddInputMappingContext()
