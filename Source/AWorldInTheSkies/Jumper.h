@@ -55,7 +55,7 @@ protected:
 
 	void HandleOxygenRemainsChange(const float OldValue, const float NewValue);
 	void HandleHealthRemainsChange(const float OldValue, const float NewValue);
-	void Restart();
+	void JumperRestart();
 
 private:
 	void AddInputMappingContext();

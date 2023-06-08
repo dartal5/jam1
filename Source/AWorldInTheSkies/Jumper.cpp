@@ -19,8 +19,8 @@ AJumper::AJumper(const FObjectInitializer& InObjectInitializer)
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	AddOwnedComponent(HealthComponent);
 
-	RestartComponent = CreateDefaultSubobject<URestartComponent>(TEXT("RestartComponent"));
-	AddOwnedComponent(RestartComponent);
+	//RestartComponent = CreateDefaultSubobject<URestartComponent>(TEXT("RestartComponent"));
+	//AddOwnedComponent(RestartComponent);
 
 	BreathingComponent = CreateDefaultSubobject<UBreathingComponent>(TEXT("BreathingComponent"));
 	AddOwnedComponent(BreathingComponent);
@@ -121,7 +121,7 @@ void AJumper::HandleOxygenRemainsChange(const float OldValue, const float NewVal
 
 	UE_LOG(LogTemp, Display, TEXT("[Oxygen 0] Player Died in Pain..."));
 
-	Restart();
+	JumperRestart();
 }
 
 void AJumper::HandleHealthRemainsChange(const float OldValue, const float NewValue)
@@ -133,10 +133,10 @@ void AJumper::HandleHealthRemainsChange(const float OldValue, const float NewVal
 
 	UE_LOG(LogTemp, Display, TEXT("[Health 0] Player Died in Pain..."));
 
-	Restart();
+	JumperRestart();
 }
 
-void AJumper::Restart()
+void AJumper::JumperRestart()
 {
 	if (!IsValid(RestartComponent))
 	{
