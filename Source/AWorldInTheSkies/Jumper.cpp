@@ -19,8 +19,8 @@ AJumper::AJumper(const FObjectInitializer& InObjectInitializer)
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	AddOwnedComponent(HealthComponent);
 
-	//RestartComponent = CreateDefaultSubobject<URestartComponent>(TEXT("RestartComponent"));
-	//AddOwnedComponent(RestartComponent);
+	RestartComponent = CreateDefaultSubobject<URestartComponent>(TEXT("RestartComponent"));
+	AddOwnedComponent(RestartComponent);
 
 	BreathingComponent = CreateDefaultSubobject<UBreathingComponent>(TEXT("BreathingComponent"));
 	AddOwnedComponent(BreathingComponent);
